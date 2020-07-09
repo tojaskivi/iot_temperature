@@ -1,8 +1,3 @@
----
-title: Temperature to Cloud
-tags: temperature, sensor, iot, pycom, lopy4, python, linux, ubuntu
-description: Tutorial about sending data to the cloud via wifi.
----
 
 # Data to cloud via WiFi
 ### a tutorial by to222ga
@@ -101,17 +96,19 @@ You could also use a breadboard to do the connection. [Here is a guide on how to
 ## The cloud :cloud: 
 I decided to use [Ubidots](https://ubidots.com/) as my cloud-solution.
 
-The reason I chose Ubidots is because of it's ease to use. It makes it very simple to connect your device and send data to the cloud. You can easily create graphs and triggers. It is also free (there is a pro version).
+After registering an account to Ubidots, you can use [this guide](https://help.ubidots.com/en/articles/961994-connect-any-pycom-board-to-ubidots-using-wi-fi-over-http) to connect your device to Ubidots.
 
-I first tried using Pybytes, but setting up an event/trigger was much more difficult. When the temperature was under a certain value, I wanted to be notified somehow. In Pybytes you could create a Webhook and go via some steps to get notified. Ubidots has a built in feature that sends me an E-mail when the conditions of the event is met.
+The reason I chose Ubidots is because of it's ease to use. It makes it very simple to connect your device and send data to the cloud. You can easily create graphs and triggers. It is also free (but there is a pro version). If you are using the free version, you are limited to send 4000 packages to the cloud every 24 hours. This is around two per minute.
 
-In Ubidots you also have much more freedom to customize your dashboard (screen where you see all your data/graphs) and it looks really neat.
+I first tried using Pybytes, but setting up an event/trigger was much more difficult and more advanced than it should be. When the temperature was under a certain value, I wanted to be notified somehow. In Pybytes you could create a Webhook and go via some steps to get notified. Ubidots has a built in feature that sends me an E-mail when the conditions of the event is met. I added Ubidots as a favorite, and now I get a notification on my phone when the condition is met.
+
+I also added a trigger that notifies me when data hasn't been recieved for 60 minutes. This usually means that the thermometer has run out of battery and needs a recharge.
 
 ---
 
 ## The actual code :computer: 
 
-L I N K T O G I T H U B
+The code can be found here in this repository.
 
 ---
 
@@ -127,8 +124,10 @@ I'm using WiFi to connect the board to the internet. You could use SigFox or LoR
 
 In Ubidots you can represent the data in many different ways. Graphs, tables, thermometers. Follow [this guide](https://help.ubidots.com/en/articles/961994-connect-any-pycom-board-to-ubidots-using-wi-fi-over-http) to connect your device to Ubidots. It will also show how to connect your device to your Wi-Fi network.
 
-Just make sure to enter your WiFi SSID and password.
-```python=13
+Just make sure to enter your WiFi SSID, password and Ubidots token.
+```python
+TOKEN = "YOUR_UBIDOTS_TOKEN" #Put your TOKEN here
+...
 wlan.connect("wifi-SSID-here", auth=(WLAN.WPA2, "wifi-password-here"), timeout=5000)
 ```
 
@@ -138,18 +137,8 @@ wlan.connect("wifi-SSID-here", auth=(WLAN.WPA2, "wifi-password-here"), timeout=5
 
 I would love to have used LoRa instead of WiFi, because it consumes a lot less power, which would make the battery last a lot longer. It would also be cool if I could have connected the temperature to some blinds or curtains, so they would go up and down depending on the temperature.
 
-
-
-
 ---
-
-
 
 ### Thank you! :sheep: 
 
-You can find me on
-
-- GitHub
-- Twitter
-- or email me
 
