@@ -7,12 +7,12 @@
 *DISCLAIMER:
 This tutorial is made for Ubuntu users. The steps haven't been tested for Windows/Mac/other Linux distros. The actual code is the same for PC/Mac/Linux, but the **Getting Started** section is for Ubuntu.*
 
-This tutorial will show you one way to send data to the cloud via WiFi, using MicroPython. The project will take about two hours, depending on how much you `ctrl+C -> ctrl+V`, or try to learn and code it yourself.
+This tutorial will show you one way to send data to the cloud via WiFi, using MicroPython. The project will take about three hours, depending on how much you `ctrl+C -> ctrl+V`, or try to learn and code it yourself.
 
 * Beginner :beginner:
 * MicroPython :snake:
 * LoPy4 :robot_face: 
-* ~ 2 ± 1 hours :timer_clock: 
+* ~ 3 ± 1 hours :timer_clock: 
 * WiFi :signal_strength:
 * Linux :penguin: 
 
