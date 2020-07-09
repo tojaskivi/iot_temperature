@@ -20,6 +20,7 @@ wlan.connect("your wifi SSID here", auth=(WLAN.WPA2, "your wifi password here"),
 
 while not wlan.isconnected ():
     machine.idle()
+    # if wifi is not connected, the onboard led turns red to notify you that it can't reach the wifi
     pycom.rgbled(0xFF0000)
 print("Connected to Wifi\n")
 
@@ -30,8 +31,9 @@ def build_json(variable1, value1):
         return data
     except:
         return None
-
+      
 # Sends the request. Please reference the REST API reference https://ubidots.com/docs/api/
+# If the data is empty, don't send it
 def post_var(device, value1):
     try:
         url = "https://industrial.api.ubidots.com/"
@@ -70,12 +72,13 @@ def get_temperature():
         
 # defines variables
 total_temperature = 0
-counter = 1
+counter = 0
 
 pycom.rgbled(0x000000)
 # loop forever
 while True:
 
+    counter += 1
     print(counter)
     # save value from get_temperature()
     temperature = get_temperature()
@@ -83,14 +86,13 @@ while True:
     print(temperature)
     # add it so it is possible to get the average temperature
     total_temperature += temperature
-
-    counter += 1
     
     # when enough data is collected, send it to Ubidots
     if counter == send_limit:
         post_var("pycom", total_temperature/counter)
         print(total_temperature/counter)
         print(counter)
-        counter = 1
+        counter = 0
         total_temperature = 0
+        
     time.sleep(DELAY)
