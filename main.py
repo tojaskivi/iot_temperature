@@ -1,21 +1,23 @@
-from network import WLAN
-import urequests as requests
-import machine
-import time
-import pycom
+from network import WLAN      # library to connect to wifi
+import urequests as requests  # sending data to ubidots
+import machine                # basic functions used by the board 
+import time                   # used to make the device sleep
+import pycom                  # controlling the board, like onboard rgb
 
-print("v 1.0")
+print("v 1.0.1")
 pycom.heartbeat(False)
 pycom.rgbled(0x999999)
 
-TOKEN = "YOUR_UBIDOTS_TOKEN" #Put here your TOKEN
-DELAY = 60 # Delay in seconds
+TOKEN = "YOUR_UBIDOTS_TOKEN" #Put your ubidot token here
+DELAY = 60 # How long between the measurements
 send_limit = 10 # How often data should be sent to the cloud.
-                # If delay is equal to 60 and send_limit is equal to 10, data will be sent every fifteen minutes
+                # If delay is equal to 60 and send_limit is equal to 10, data will be sent every ten minutes
+  
 wlan = WLAN(mode=WLAN.STA)
 wlan.antenna(WLAN.INT_ANT)
 
 # Assign your Wi-Fi credentials
+# This function connects to wifi
 wlan.connect("your wifi SSID here", auth=(WLAN.WPA2, "your wifi password here"), timeout=5000)
 
 while not wlan.isconnected ():
@@ -49,7 +51,6 @@ def post_var(device, value1):
     except:
         pass
 
-
 # function used to get the temperature
 def get_temperature():
 
@@ -69,12 +70,14 @@ def get_temperature():
     celsius = (millivolt-500)/10
     
     return celsius
-        
+
+# turn off the onboard led
+pycom.rgbled(0x000000)
+
 # defines variables
 total_temperature = 0
 counter = 0
 
-pycom.rgbled(0x000000)
 # loop forever
 while True:
 
@@ -94,5 +97,6 @@ while True:
         print(counter)
         counter = 0
         total_temperature = 0
-        
+    
+    # device sleeps for DELAY seconds
     time.sleep(DELAY)
